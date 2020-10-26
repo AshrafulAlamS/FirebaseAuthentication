@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:text="Create New Account"
+        android:inputType="textPersonName"
         android:layout_marginBottom="20dp"/>
 
     <EditText
@@ -29,31 +30,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="Name" />
+        android:hint="Enter Full Name" />
     <EditText
         android:id="@+id/etEmailId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="Email" />
+        android:hint="Email"
+        android:inputType="textEmailAddress"/>
     <EditText
         android:id="@+id/etPhoneId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="Phone" />
+        android:hint="Phone"
+        android:inputType="phone"/>
     <EditText
         android:id="@+id/etPasswordId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="Password" />
+        android:hint="Password"
+        android:inputType="textPassword"/>
     <EditText
         android:id="@+id/etConfirmPasswordId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="Confirm Password" />
+        android:hint="Confirm Password"
+        android:inputType="textPassword"/>
 
     <Button
         android:id="@+id/btnRegister"
@@ -67,7 +72,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="Already have account? Login here"/>
+        android:text="Already have account? Login here"
+        android:textColor="@color/design_default_color_secondary_variant"/>
 
     <ProgressBar
         android:id="@+id/progressBarId"
