@@ -82,7 +82,18 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()){
 
                             //send email verification link
-                            
+                            FirebaseUser fUser = firebaseAuth.getCurrentUser();
+                            fUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(RegisterActivity.this, "Verification Email has been sent", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG, "onFailure: Email not sent" + e.getMessage());
+                                }
+                            });
 
                             Toast.makeText(RegisterActivity.this, "User created", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));

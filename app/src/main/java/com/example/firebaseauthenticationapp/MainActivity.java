@@ -77,5 +77,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //send verifiactin link
+    public void sendVerificationLink(){
+        Context c =verifyBtn.getContext();
 
+        firebaseUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                //Toast.makeText(MainActivity.this, "A verification link has been sent to your email", Toast.LENGTH_SHORT).show();
+
+                TextView reSentMail =new TextView(c);
+                AlertDialog.Builder showMessageDialog = new AlertDialog.Builder(c);
+                showMessageDialog.setTitle("Check Email");
+                showMessageDialog.setMessage("A verification link is sent to you email. Please verify your email and login again");
+                showMessageDialog.setView(reSentMail);
+                showMessageDialog.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        logoutUser();
+                    }
+                });
+                showMessageDialog.create().show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: Email not sent" + e.getMessage());
+            }
+        });
+    }
 }
