@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private StorageReference storageReference;
     private String userId ;
+    private int backPressedCount =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Retrive data from FirebaseFirestore
         //retriveProfileData();
-        DocumentReference documentReference = firestore.collection("users").document(userId);
+        DocumentReference documentReference = firestore.collection(Constants.COLLECTION_USER).document(userId);
         if (userId !=null){
             documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
                 @Override
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Retrive Profile Image Initially
     private void retriveProfileImageInitially(){
-        StorageReference profileRef = storageReference.child("users/"+firebaseUser.getUid()+"/Profile-Picture");
+        StorageReference profileRef = storageReference.child(Constants.COLLECTION_USER+"/"+firebaseUser.getUid()+"/Profile-Picture");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -153,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void uploadImageToFirebase(Uri imageUri){
         //Upload image to firebase storage
-        StorageReference fileRef = storageReference.child("users/"+firebaseUser.getUid()+"/Profile-Picture");
+        StorageReference fileRef = storageReference.child(Constants.COLLECTION_USER+"/"+firebaseUser.getUid()+"/Profile-Picture");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -221,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Retrive data from FirebaseFirestore
     /*private void retriveProfileData(){
-        DocumentReference documentReference = firestore.collection("users").document(userId);
+        DocumentReference documentReference = firestore.collection(Constants.COLLECTION_USER+"/").document(userId);
         if (userId !=null){
             documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
                 @Override
@@ -233,4 +234,16 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }*/
+
+    @Override
+    public void onBackPressed() {
+
+        if (backPressedCount != 1){
+            backPressedCount = 1;
+            Toast.makeText(this, "Click again to Close", Toast.LENGTH_SHORT).show();
+        }else {
+            super.onBackPressed();
+            this.finish();
+        }
+    }
 }

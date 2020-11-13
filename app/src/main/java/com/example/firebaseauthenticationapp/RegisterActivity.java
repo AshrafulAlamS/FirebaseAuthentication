@@ -58,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
         //check if user is already registered
         if (firebaseAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            finish();
+            RegisterActivity.this.finish();//to finish this activity
         }
 
 
@@ -134,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void storeUserDataInFirestore(){
         userID = firebaseAuth.getCurrentUser().getUid();
 
-        DocumentReference documentReference = firestore.collection("users").document(userID);
+        DocumentReference documentReference = firestore.collection(Constants.COLLECTION_USER).document(userID);
         Map<String, Object> user =new HashMap<>();
         user.put("fName", etFullName.getText().toString());
         user.put("email", etEmail.getText().toString().trim());
@@ -169,5 +169,9 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.d(TAG, "onFailure: Email not sent" + e.getMessage());
             }
         });
+    }
+
+    public void logAsGuest(View view) {
+        startActivity(new Intent(RegisterActivity.this, UserListActivity.class));
     }
 }
